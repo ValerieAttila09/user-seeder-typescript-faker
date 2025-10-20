@@ -15,3 +15,9 @@ export interface User {
   createdAt: Date;
   posts: Post[];
 }
+
+export interface UserInput {
+  username: string;
+  email: string;
+  password: string;
+}
