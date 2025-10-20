@@ -54,7 +54,7 @@ export class UserService {
     return this.users.length < initialLength;
   }
 
-  private generateDefaultPosts(): Post[] {
+  public generateDefaultPosts(): Post[] {
     const postCount = faker.number.int({ min: 1, max: 3 });
     return Array.from({ length: postCount }, (_, index) => ({
       id: faker.string.uuid(),
@@ -66,7 +66,7 @@ export class UserService {
     }));
   }
 
-  private searchUsers(query: string): User[] {
+  public searchUsers(query: string): User[] {
     const lowerQuery = query.toLowerCase();
     return this.users.filter((user) => {
       user.username.toLowerCase().includes(lowerQuery) ||
@@ -74,7 +74,7 @@ export class UserService {
     });
   }
 
-  private getUsersWithPostCount(): { user: User, postCount: number }[] {
+  public getUsersWithPostCount(): { user: User, postCount: number }[] {
     return this.users.map((user) => ({
       user,
       postCount: user.posts.length
