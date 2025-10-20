@@ -1,4 +1,4 @@
-import { User, UserInput, Post } from "./interfaces/types";
+import { User, UserInput, Post } from "../interfaces/types";
 import { faker } from "@faker-js/faker";
 
 export class UserService {
