@@ -1,0 +1,68 @@
+[
+  {
+    "id": "4a6c7426-eac6-4a66-8469-59a49ac070bd",
+    "username": "ValerieAttila09",
+    "email": "ggwp123@gmail.com",
+    "password": "ggwp123",
+    "createdAt": "2025-10-21T14:01:22.862Z",
+    "posts": [
+      {
+        "id": "29c750af-3583-44e1-910e-f6b5fd9925b9",
+        "title": "Welcome post 1",
+        "tag": "update",
+        "content": "Tibi aptus tribuo calcar officia tabesco. Adversus coepi ceno somnus tumultus voluptate veritas solio talis cattus. Soleo amoveo uter magni sponte ipsam alius deprimo tergiversatio certe.\nConduco torqueo baiulus vita valeo tremo. Atque accommodo distinctio valde. Aegrus virgo doloremque cunctatio ait theatrum denique unde terra.",
+        "createdAt": "2025-10-21T14:01:22.867Z",
+        "publishedBy": "new-user"
+      },
+      {
+        "id": "3c1365c7-d1f5-4669-b224-9a6a2aa255aa",
+        "title": "Welcome post 2",
+        "tag": "update",
+        "content": "Vivo vero desolo acervus venio campana deprimo. Decet depulso deporto termes. Nobis cribro pariatur porro barba culpo.\nCetera claustrum vinco currus theca. Corpus eos vado talis arto desolo molestiae voluptate. Cedo delectatio voluntarius.",
+        "createdAt": "2025-10-21T14:01:22.872Z",
+        "publishedBy": "new-user"
+      },
+      {
+        "id": "3bd0b3e6-b466-41a0-bc2f-87b3965f19c2",
+        "title": "Welcome post 3",
+        "tag": "personal",
+        "content": "Sint arma votum acidus convoco thesaurus dicta torqueo ut magnam. Suppellex ratione deprecator vulariter hic corrigo validus. Terga auxilium cresco aetas.\nChirographum aequus umerus tracto. Cattus caries ad voluptatibus virga alioqui odit pariatur adflicto. Voluptates nobis quasi iste tonsor facere.",
+        "createdAt": "2025-10-21T14:01:22.872Z",
+        "publishedBy": "new-user"
+      }
+    ]
+  },
+  {
+    "id": "88628459-d5df-4beb-89f6-213452ee8054",
+    "username": "Abyandra243",
+    "email": "aben123@gmail.com",
+    "password": "aben123",
+    "createdAt": "2025-10-21T14:12:53.746Z",
+    "posts": [
+      {
+        "id": "2546e630-0335-491c-a2f5-732ef67b76d6",
+        "title": "Welcome post 1",
+        "tag": "update",
+        "content": "Suffragium comis vulariter auxilium. Fugit capitulus tabella contego spes conatus tabernus tandem vehemens audacia. Quae socius odio quod ducimus.\nConspergo eius tot vel cogo aedificium conturbo. Vilicus absorbeo solitudo. Versus dolores beneficium.",
+        "createdAt": "2025-10-21T14:12:53.750Z",
+        "publishedBy": "new-user"
+      },
+      {
+        "id": "0cf103d4-e5c7-4b78-a1d7-22cab069d996",
+        "title": "Welcome post 2",
+        "tag": "personal",
+        "content": "Tui tres spectaculum atavus agnitio complectus arbitro. Summopere illo tergeo. Curto adiuvo adhuc deludo ustulo vilicus ustulo crapula capillus.\nDecimus esse callide sustineo custodia adsum reiciendis truculenter angulus uberrime. Arbor usus charisma crustulum animadverto. Tempus tui tergum cupio adaugeo.",
+        "createdAt": "2025-10-21T14:12:53.750Z",
+        "publishedBy": "new-user"
+      },
+      {
+        "id": "b741b6f0-c5e5-4a64-a14b-ef85fe841beb",
+        "title": "Welcome post 3",
+        "tag": "personal",
+        "content": "Valde depopulo theca aureus tremo. Careo stipes torqueo accedo. Perspiciatis comptus turpis aro centum speciosus tantum aliquam canis.\nAdemptio cunae damno valetudo voro summopere. Volo copia barba socius ustulo. Vel conitor tolero quidem cicuta ambulo bonus eaque concido admiratio.",
+        "createdAt": "2025-10-21T14:12:53.751Z",
+        "publishedBy": "new-user"
+      }
+    ]
+  }
+]

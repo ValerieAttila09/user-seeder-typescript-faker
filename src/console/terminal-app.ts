@@ -3,7 +3,6 @@ import chalk from 'chalk';
 import Table from 'cli-table3';
 import { UserService } from '../services/user-service';
 import { User, UserInput } from '../interfaces/types';
-import Seeder from '../seed';
 
 class TerminalApp {
   private rl: readline.Interface;
@@ -15,23 +14,29 @@ class TerminalApp {
       input: process.stdin,
       output: process.stdout
     });
+    this.userService = new UserService([], 'users.json');
+    this.showFileInfo();
+  }
 
-    const seeder = new Seeder();
-    this.userService = new UserService(seeder.getUsers());
+  private showFileInfo(): void {
+    const fileInfo = this.userService.getFileInfo();
+    console.log(chalk.blue('📁 Data File: ') + chalk.white(fileInfo.filePath));
+    console.log(chalk.blue('👥 Loaded Users: ') + chalk.white(fileInfo.userCount.toString()));
   }
 
   private displayMenu(): void {
-    console.log("\n" + chalk.cyan("🗂️ USER MANAGEMENT SYSTEM"));
-    console.log(chalk.gray("==============================="));
-    console.log(chalk.white("1. List All Users"));
-    console.log(chalk.white("2. View User Details"));
-    console.log(chalk.white("3. Add New User"));
-    console.log(chalk.white("4. Edit User"));
-    console.log(chalk.white("5. Delete user"));
-    console.log(chalk.white("6. Search Users"));
-    console.log(chalk.white("7. Statistics"));
-    console.log(chalk.white("8. Exit"));
-    console.log(chalk.gray("==============================="));
+    console.log('\n' + chalk.cyan('🗂️  USER MANAGEMENT SYSTEM'));
+    console.log(chalk.gray('========================================'));
+    console.log(chalk.white('1. 📋 List All Users'));
+    console.log(chalk.white('2. 👤 View User Details'));
+    console.log(chalk.white('3. ➕ Add New User'));
+    console.log(chalk.white('4. ✏️  Edit User'));
+    console.log(chalk.white('5. 🗑️  Delete User'));
+    console.log(chalk.white('6. 🔍 Search Users'));
+    console.log(chalk.white('7. 📊 Statistics'));
+    console.log(chalk.white('8. 💾 Reload from File'));
+    console.log(chalk.white('9. 🚪 Exit'));
+    console.log(chalk.gray('========================================'));
   }
 
   public async start(): Promise<void> {
@@ -39,7 +44,7 @@ class TerminalApp {
 
     while (this.isRunning) {
       this.displayMenu();
-      const choice = await this.question(chalk.yellow("Choose an option (1-8) : "));
+      const choice = await this.question(chalk.yellow("Choose an option (1-9) : "));
 
       switch (choice.trim()) {
         case '1':
@@ -64,10 +69,13 @@ class TerminalApp {
           await this.showStatistics();
           break;
         case '8':
+          await this.reloadFromFile();
+          break;
+        case '9':
           await this.exit();
           break;
         default:
-          console.log(chalk.red("Invalid option! please choose 1-8."));
+          console.log(chalk.red('❌ Invalid option! Please choose 1-9.'));
       }
     }
   }
@@ -79,7 +87,7 @@ class TerminalApp {
   }
 
   private async listAllUsers(): Promise<void> {
-    const users = this.userService.getAllUser();
+    const users = this.userService.getAllUsers();
 
     if (users.length === 0) {
       console.log(chalk.yellow("No users found."));
@@ -94,12 +102,12 @@ class TerminalApp {
         chalk.blue("Posts"),
         chalk.blue("Created At"),
       ],
-      colWidths: [10, 20, 25, 8, 20]
+      colWidths: [16, 20, 25, 8, 20]
     });
 
     users.forEach((user) => {
       table.push([
-        user.id.substring(0, 8) + "...",
+        user.id.substring(0, 16) + "...",
         chalk.white(user.username),
         chalk.white(user.email),
         chalk.green(user.posts.length.toString()),
@@ -110,7 +118,7 @@ class TerminalApp {
     console.log("\n", + chalk.cyan("All USERS"));
     console.log(table.toString());
 
-    await this.question(chalk.gray('\nPress Enter to continue...'));
+    await this.question(chalk.gray('\n\nPress Enter to continue...'));
   }
 
   private async viewUserDetails(): Promise<void> {
@@ -134,11 +142,12 @@ class TerminalApp {
       console.log("\n" + chalk.cyan("POSTS : "));
       user.posts.forEach((post, index) => {
         console.log(chalk.white(`${index + 1}. ${post.title}`));
-        console.log(chalk.white(`\t${post.tag} | Created at : ${post.createdAt.toLocaleDateString()}`));
+        console.log(chalk.white(`${post.tag} | Created at : ${post.createdAt.toLocaleDateString()}`));
+        console.log(chalk.white(`Content : \n${chalk.gray(post.content.substring(0, 369))}...\n`));
       });
     }
 
-    await this.question(chalk.gray('Press Enter to continue...'));
+    await this.question(chalk.gray('\nPress Enter to continue...'));
   }
 
   private async addUser(): Promise<void> {
@@ -161,7 +170,7 @@ class TerminalApp {
     console.log(chalk.white(`Username : ${createdUser.username}`));
     console.log(chalk.white(`Email : ${createdUser.email}`));
 
-    await this.question(chalk.gray("Press Enter to continue..."));
+    await this.question(chalk.gray("\nPress Enter to continue..."));
   }
 
   private async editUser(): Promise<void> {
@@ -200,7 +209,7 @@ class TerminalApp {
       console.log(chalk.red("Failed to update user!"));
     }
 
-    await this.question(chalk.gray("Press Enter to continue..."));
+    await this.question(chalk.gray("\nPress Enter to continue..."));
   }
 
   private async deleteUser(): Promise<void> {
@@ -229,9 +238,9 @@ class TerminalApp {
       console.log(chalk.yellow("Deletion cancelled."));
     }
 
-    await this.question(chalk.gray('Press Enter to Continue...'));
+    await this.question(chalk.gray('\nPress Enter to Continue...'));
   }
-  
+
   private async searchUsers(): Promise<void> {
     const query = await this.question(chalk.yellow('Search by username or email : '));
 
@@ -254,12 +263,12 @@ class TerminalApp {
         chalk.blue("Email"),
         chalk.blue("Posts"),
       ],
-      colWidths: [10, 20, 25, 8]
+      colWidths: [20, 20, 25, 8]
     });
 
     results.forEach((user) => {
       table.push([
-        user.id.substring(0, 8) + "...",
+        user.id.substring(0, 14) + "...",
         chalk.white(user.username),
         chalk.white(user.email),
         chalk.green(user.posts.length.toString())
@@ -269,11 +278,11 @@ class TerminalApp {
     console.log("\n" + chalk.cyan(`SEARCH RESULTS (${results.length} found)`));
     console.log(table.toString());
 
-    await this.question(chalk.gray("Press Enter to continue..."))
+    await this.question(chalk.gray("\nPress Enter to continue..."))
   }
-  
+
   private async showStatistics(): Promise<void> {
-    const users = this.userService.getAllUser();
+    const users = this.userService.getAllUsers();
     const totalPosts = users.reduce((sum, user) => sum + user.posts.length, 0);
     const usersWithPosts = users.filter((user) => user.posts.length > 0).length;
 
@@ -290,9 +299,21 @@ class TerminalApp {
 
     console.log(chalk.white(`New Users (last 7 days): ${chalk.green(recentUsers.length.toString())}`));
 
-    await this.question(chalk.gray("\nPress Enter to continue..."))
+    await this.question(chalk.gray("\n\nPress Enter to continue..."))
   }
-  
+
+  private async reloadFromFile(): Promise<void> {
+    console.log(chalk.yellow('🔄 Reloading data from users.json...'));
+
+    this.userService = new UserService([], 'users.json');
+    const users = this.userService.getAllUsers();
+
+    console.log(chalk.green(`✅ Reloaded ${users.length} users from file`));
+    this.showFileInfo();
+
+    await this.question(chalk.gray('\nPress Enter to continue...'));
+  }
+
   private async exit(): Promise<void> {
     console.log(chalk.green("\nThank you for using User Management System!"));
     this.isRunning = false;
