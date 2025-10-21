@@ -2,6 +2,7 @@ import { Post, User } from './interfaces/types';
 import { faker } from "@faker-js/faker";
 import { writeFileSync } from 'fs';
 import { join } from 'path';
+import chalk from 'chalk';
 
 class Seeder {
   public users: User[] = [];
@@ -69,6 +70,12 @@ class Seeder {
     const filePath = join(__dirname, '..', filename);
     writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
     console.log(`Data berhasil disimpan ke: ${filePath}`);
+  }
+
+  public saveToUsersJSON(filename: string = 'users.json'): void {
+    const filePath = join(__dirname, '..', filename);
+    writeFileSync(filePath, JSON.stringify(this.users, null, 2), 'utf8');
+    console.log(chalk.green(`✅ ${this.users.length} users saved to: ${filePath}`));
   }
 
   public displaySummary(): void {

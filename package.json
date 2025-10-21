@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node src/seed.ts",
-    "start": "node dist/seed.js",
+    "init": "ts-node src/init-data.ts",
+    "start": "ts-node src/main.ts",
     "build": "tsc",
-    "dev": "ts-node src/main.ts"
+    "dev": "ts-node src/main.ts",
+    "reset": "ts-node src/init-data.ts"
   },
   "keywords": [],
   "author": "",
