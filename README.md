@@ -1,8 +1,11 @@
-User Management System
+# User Management System
 
 Sebuah aplikasi manajemen user yang dibangun dengan TypeScript dan Faker.js untuk menghasilkan data dummy. Aplikasi ini menyediakan antarmuka terminal yang interaktif untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada data user dan post.
 
-🚀 Fitur
+![Documentary Image](./documents/assets/doc1.png "Documentary Image 1")
+![Documentary Image](./documents/assets/doc2.png "Documentary Image 2")
+
+### 🚀 Fitur
 
 · User Management: Tambah, edit, hapus, dan lihat user
 · Post Management: Setiap user dapat memiliki multiple posts
@@ -12,12 +15,12 @@ Sebuah aplikasi manajemen user yang dibangun dengan TypeScript dan Faker.js untu
 · Interactive Terminal UI: Antarmuka yang user-friendly dengan warna dan emoji
 · Dummy Data Generation: Generate data realistis menggunakan Faker.js
 
-📋 Requirements
+### 📋 Requirements
 
 · Node.js (v14 atau lebih tinggi)
 · npm atau yarn
 
-🛠️ Instalasi
+### 🛠️ Instalasi
 
 1. Clone atau download project ini
 2. Install dependencies
@@ -52,7 +55,7 @@ Reset Data ke Awal
 npm run reset
 ```
 
-📁 Struktur Project
+### 📁 Struktur Project
 
 ```
 user-management-system/
@@ -69,7 +72,7 @@ user-management-system/
 └── README.md
 ```
 
-🎯 Menu Aplikasi
+### 🎯 Menu Aplikasi
 
 1. 📋 List All Users
 
@@ -135,7 +138,7 @@ Memuat ulang data dari file users.json
 
 Keluar dari aplikasi
 
-📊 Data Structure
+### 📊 Data Structure
 
 User
 
@@ -163,7 +166,7 @@ interface Post {
 }
 ```
 
-🗃️ File Data
+### 🗃️ File Data
 
 users.json
 
@@ -177,7 +180,7 @@ seed-data.json
 
 Backup data dummy yang dihasilkan oleh seeder.
 
-🔧 Development
+### 🔧 Development
 
 Build Project
 
@@ -199,21 +202,21 @@ Dependencies Utama
 · cli-table3 - Tabel rapi di terminal
 · readline - Input interaktif
 
-🐛 Troubleshooting
+### 🐛 Troubleshooting
 
-Error: File tidak ditemukan
+Error: `File tidak ditemukan`
 
 · Jalankan npm run init untuk membuat file data awal
 
-Error: Data corrupt
+Error: `Data corrupt`
 
 · Jalankan npm run reset untuk mengembalikan data ke keadaan awal
 
-Error: Module tidak ditemukan
+Error: `Module tidak ditemukan`
 
 · Hapus folder node_modules dan jalankan npm install kembali
 
-📝 Contoh Penggunaan
+### 📝 Contoh Penggunaan
 
 Menambah User Baru
 
@@ -232,7 +235,7 @@ Melihat Statistik
 1. Pilih menu "7. Statistics"
 2. Sistem menampilkan overview data yang ada
 
-🤝 Kontribusi
+### 🤝 Kontribusi
 
 1. Fork project ini
 2. Buat feature branch (git checkout -b feature/AmazingFeature)
@@ -240,11 +243,11 @@ Melihat Statistik
 4. Push ke branch (git push origin feature/AmazingFeature)
 5. Buat Pull Request
 
-📄 License
+### 📄 License
 
 Distributed under the MIT License. See LICENSE for more information.
 
-🆘 Bantuan
+### 🆘 Bantuan
 
 Jika mengalami masalah:
 
@@ -255,4 +258,4 @@ Jika mengalami masalah:
 
 ---
 
-Happy Coding! 🚀
+**_Happy Coding! 🚀_**
