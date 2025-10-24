@@ -4,6 +4,8 @@ Sebuah aplikasi manajemen user yang dibangun dengan TypeScript dan Faker.js untu
 
 ![Documentary Image](./documents/assets/doc1.png "Documentary Image 1")
 ![Documentary Image](./documents/assets/doc2.png "Documentary Image 2")
+[![Tools](https://skillicons.dev/icons?i=ts,nodejs,npm)](https://skillicons.dev)
+
 
 ### 🚀 Fitur
 
