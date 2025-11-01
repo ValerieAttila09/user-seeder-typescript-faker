@@ -2,8 +2,17 @@
 
 Sebuah aplikasi manajemen user yang dibangun dengan TypeScript dan Faker.js untuk menghasilkan data dummy. Aplikasi ini menyediakan antarmuka terminal yang interaktif untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada data user dan post.
 
+---
+
 ![Documentary Image](./documents/assets/doc1.png "Documentary Image 1")
 ![Documentary Image](./documents/assets/doc2.png "Documentary Image 2")
+
+
+
+### 🧰 Tools
+
+[![Tools](https://skillicons.dev/icons?i=ts,nodejs,npm)](https://skillicons.dev)
+
 
 ### 🚀 Fitur
 
