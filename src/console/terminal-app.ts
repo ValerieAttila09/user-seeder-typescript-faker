@@ -15,7 +15,6 @@ class TerminalApp {
       output: process.stdout
     });
     this.userService = new UserService([], 'users.json');
-    this.showFileInfo();
   }
 
   private showFileInfo(): void {
@@ -24,27 +23,54 @@ class TerminalApp {
     console.log(chalk.blue('👥 Loaded Users: ') + chalk.white(fileInfo.userCount.toString()));
   }
 
+  private async showIntro(): Promise<void> {
+    console.clear();
+
+    const title = `
+${chalk.blue('██╗   ██╗')}███████╗${chalk.blue('██╗   ██╗')}██████╗ ${chalk.blue('██╗   ██╗')}███████╗${chalk.blue('██████╗ ')}
+${chalk.blue('██║   ██║')}██╔════╝${chalk.blue('██║   ██║')}██╔══██╗${chalk.blue('╚██╗ ██╔╝')}██╔════╝${chalk.blue('██╔══██╗')}
+${chalk.blue('██║   ██║')}█████╗  ${chalk.blue('██║   ██║')}██████╔╝${chalk.blue(' ╚████╔╝ ')}█████╗  ${chalk.blue('██████╔╝')}
+${chalk.blue('╚██╗ ██╔╝')}██╔══╝  ${chalk.blue('██║   ██║')}██╔══██╗${chalk.blue('  ╚██╔╝  ')}██╔══╝  ${chalk.blue('██╔══██╗')}
+${chalk.blue(' ╚████╔╝ ')}███████╗${chalk.blue('╚██████╔╝')}██║  ██║${chalk.blue('   ██║   ')}███████╗${chalk.blue('██║  ██║')}
+${chalk.blue('  ╚═══╝  ')}╚══════╝${chalk.blue(' ╚═════╝ ')}╚═╝  ╚═╝${chalk.blue('   ╚═╝   ')}╚══════╝${chalk.blue('╚═╝  ╚═╝')}
+    `;
+    console.log(title);
+
+    console.log(chalk.gray('╔════════════════════════════════════════════════════════════╗'));
+    console.log(chalk.cyan('              USER MANAGEMENT SYSTEM v1.0'));
+    console.log(chalk.gray('╚════════════════════════════════════════════════════════════╝'));
+    console.log(chalk.white('💻 Platform: ') + chalk.green(process.platform));
+    console.log(chalk.white('🔧 Node.js: ') + chalk.green(process.version));
+    console.log(chalk.white('📂 Process ID: ') + chalk.green(process.pid.toString()));
+    console.log(chalk.gray('┌────────────────────────────────────────────────────────────┐'));
+    console.log(chalk.magenta('🚀 Ready to manage your users efficiently!'));
+    console.log(chalk.gray('└────────────────────────────────────────────────────────────┘'));
+
+    await this.question(chalk.yellow('\nPress Enter to continue...'));
+    console.clear();
+  }
+
   private displayMenu(): void {
-    console.log('\n' + chalk.cyan('🗂️  USER MANAGEMENT SYSTEM'));
-    console.log(chalk.gray('========================================'));
-    console.log(chalk.white('1. 📋 List All Users'));
-    console.log(chalk.white('2. 👤 View User Details'));
-    console.log(chalk.white('3. ➕ Add New User'));
-    console.log(chalk.white('4. ✏️  Edit User'));
-    console.log(chalk.white('5. 🗑️  Delete User'));
-    console.log(chalk.white('6. 🔍 Search Users'));
-    console.log(chalk.white('7. 📊 Statistics'));
-    console.log(chalk.white('8. 💾 Reload from File'));
-    console.log(chalk.white('9. 🚪 Exit'));
-    console.log(chalk.gray('========================================'));
+    console.log('\n' + chalk.bgBlue.white(' 🗂️  USER MANAGEMENT SYSTEM '));
+    console.log(chalk.gray('┌────────────────────────────────────────────────────────────┐'));
+    console.log(chalk.gray('│') + chalk.white(' 1. 📋 List All Users                                       ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 2. 👤 View User Details                                    ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 3. ➕ Add New User                                         ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 4. ✏️  Edit User                                           ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 5. 🗑️  Delete User                                         ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 6. 🔍 Search Users                                         ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 7. 📊 Statistics                                           ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 8. 💾 Reload from File                                     ') + chalk.gray('│'));
+    console.log(chalk.gray('│') + chalk.white(' 9. 🚪 Exit                                                 ') + chalk.gray('│'));
+    console.log(chalk.gray('└────────────────────────────────────────────────────────────┘'));
   }
 
   public async start(): Promise<void> {
+    await this.showIntro();
     console.log(chalk.green.bold("🎉 Welcome to User Management System!"));
-
     while (this.isRunning) {
       this.displayMenu();
-      const choice = await this.question(chalk.yellow("Choose an option (1-9) : "));
+      const choice = await this.question(chalk.yellow("\nChoose an option (1-9) : "));
 
       switch (choice.trim()) {
         case '1':
@@ -124,29 +150,43 @@ class TerminalApp {
   private async viewUserDetails(): Promise<void> {
     const userId = await this.question(chalk.yellow("Enter User ID : "));
     const user = this.userService.getUserById(userId);
-
     if (!user) {
       console.log(chalk.red("User not found!"));
       return;
     }
 
     console.log("\n" + chalk.cyan("USER DETAILS"));
-    console.log(chalk.gray("==============================="));
-    console.log(chalk.white(`ID : ${user.id}`));
-    console.log(chalk.white(`Username : ${chalk.green(user.username)}`));
-    console.log(chalk.white(`Email : ${chalk.green(user.email)}`));
-    console.log(chalk.white(`Created At : ${chalk.green(user.createdAt.toLocaleTimeString())}`));
-    console.log(chalk.white(`Total Posts : ${chalk.green(user.posts.length.toString())}`));
+    console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+    console.log(chalk.gray("│") + chalk.white(` ID : ${user.id}`.padEnd(60)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Username : ${chalk.green(user.username)}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Email : ${chalk.green(user.email)}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Created At : ${chalk.green(user.createdAt.toLocaleTimeString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Total Posts : ${chalk.green(user.posts.length.toString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
 
     if (user.posts.length > 0) {
-      console.log("\n" + chalk.cyan("POSTS : "));
+      console.log("\n" + chalk.cyan("📝 POSTS"));
+      console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+      
       user.posts.forEach((post, index) => {
-        console.log(chalk.white(`${index + 1}. ${post.title}`));
-        console.log(chalk.white(`${post.tag} | Created at : ${post.createdAt.toLocaleDateString()}`));
-        console.log(chalk.white(`Content : \n${chalk.gray(post.content.substring(0, 369))}...\n`));
+        console.log(chalk.gray("│") + chalk.bgGreen.white(chalk.white(` ${index + 1}. ${chalk.bold(post.title)}`.padEnd(69))) + chalk.gray("│"));
+        console.log(chalk.gray("├────────────────────────────────────────────────────────────┤"));
+        
+        console.log(chalk.gray("│") + chalk.white(` Tag : ${chalk.yellow(post.tag)}`.padEnd(70)) + chalk.gray("│"));
+        console.log(chalk.gray("│") + chalk.white(` Created : ${chalk.green(post.createdAt.toLocaleDateString())}`.padEnd(70)) + chalk.gray("│"));
+        
+        const contentPreview = post.content.substring(0, 42) + (post.content.length > 42 ? "..." : "");
+        console.log(chalk.gray("│") + chalk.white(` Content :`.padEnd(60)) + chalk.gray("│"));
+        console.log(chalk.gray("│") + chalk.gray(` ${contentPreview}`.padEnd(60)) + chalk.gray("│"));
+        
+        if (index < user.posts.length - 1) {
+          console.log(chalk.gray("├────────────────────────────────────────────────────────────┤"));
+        }
       });
+      console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
+    } else {
+      console.log("\n" + chalk.yellow("No posts found for this user."));
     }
-
     await this.question(chalk.gray('\nPress Enter to continue...'));
   }
 
@@ -166,9 +206,11 @@ class TerminalApp {
     const createdUser = this.userService.addUser(newUser);
 
     console.log(chalk.green("User created successfully!"));
-    console.log(chalk.white(`ID : ${createdUser.id}`));
-    console.log(chalk.white(`Username : ${createdUser.username}`));
-    console.log(chalk.white(`Email : ${createdUser.email}`));
+    console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+    console.log(chalk.gray("│") + chalk.white(` ID : ${createdUser.id}`.padEnd(58)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Username : ${createdUser.username}`.padEnd(58)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Email : ${createdUser.email}`.padEnd(58)) + chalk.gray("│"));
+    console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
 
     await this.question(chalk.gray("\nPress Enter to continue..."));
   }
@@ -183,7 +225,9 @@ class TerminalApp {
     }
 
     console.log("\n" + chalk.cyan("EDIT USER"));
-    console.log(chalk.gray("Leave blank to keep current value\n"));
+    console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+    console.log(chalk.gray("│") + chalk.white(" Leave blank to keep current value".padEnd(60)) + chalk.gray("│"));
+    console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
 
     const username = await this.question(chalk.yellow(`Username (${user.username}) : `));
     const email = await this.question(chalk.yellow(`Email (${user.email}) : `));
@@ -203,8 +247,10 @@ class TerminalApp {
 
     if (updatedUser) {
       console.log(chalk.green("User updated successfull!"));
-      console.log(chalk.white(`Username : ${updatedUser.username}`));
-      console.log(chalk.white(`Email : ${updatedUser.email}`));
+      console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+      console.log(chalk.gray("│") + chalk.white(` Username : ${updatedUser.username}`.padEnd(60)) + chalk.gray("│"));
+      console.log(chalk.gray("│") + chalk.white(` Email : ${updatedUser.email}`.padEnd(60)) + chalk.gray("│"));
+      console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
     } else {
       console.log(chalk.red("Failed to update user!"));
     }
@@ -221,9 +267,11 @@ class TerminalApp {
       return;
     }
 
-    console.log(`\n${chalk.red("WARNING: This action cannot be undone!")}`);
-    console.log(chalk.white(`You are about to delete user : ${chalk.red(user.username)}`));
-    console.log(chalk.white(`This will also delete ${chalk.red(user.posts.length.toString())} posts.`));
+    console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+    console.log(chalk.red("│ WARNING: This action cannot be undone!".padEnd(60)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` You are about to delete user : ${chalk.red(user.username)}`.padEnd(60)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` This will also delete ${chalk.red(user.posts.length.toString())} posts.`.padEnd(60)) + chalk.gray("│"));
+    console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
 
     const confirm = await this.question(chalk.yellow("Type 'DELETE' to confirm : "));
 
@@ -287,17 +335,18 @@ class TerminalApp {
     const usersWithPosts = users.filter((user) => user.posts.length > 0).length;
 
     console.log("\n" + chalk.green("STATISTICS"));
-    console.log(chalk.gray("==============================="));
-    console.log(chalk.white(`Total Users : ${chalk.cyan(users.length.toString())}`));
-    console.log(chalk.white(`Total Posts : ${chalk.cyan(totalPosts.toString())}`));
-    console.log(chalk.white(`Users with Posts : ${chalk.cyan(usersWithPosts.toString())}`));
-    console.log(chalk.white(`Total Users : ${chalk.cyan((totalPosts / users.length).toFixed(2))}`));
+    console.log(chalk.gray("┌────────────────────────────────────────────────────────────┐"));
+    console.log(chalk.gray("│") + chalk.white(` Total Users : ${chalk.cyan(users.length.toString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Total Posts : ${chalk.cyan(totalPosts.toString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Users with Posts : ${chalk.cyan(usersWithPosts.toString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("│") + chalk.white(` Average Posts per User : ${chalk.cyan((totalPosts / users.length).toFixed(2))}`.padEnd(70)) + chalk.gray("│"));
 
     const recentUsers = users.filter((user) => {
       user.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     });
 
-    console.log(chalk.white(`New Users (last 7 days): ${chalk.green(recentUsers.length.toString())}`));
+    console.log(chalk.gray("│") + chalk.white(` New Users (last 7 days): ${chalk.green(recentUsers.length.toString())}`.padEnd(70)) + chalk.gray("│"));
+    console.log(chalk.gray("└────────────────────────────────────────────────────────────┘"));
 
     await this.question(chalk.gray("\n\nPress Enter to continue..."))
   }
